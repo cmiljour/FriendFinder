@@ -178,7 +178,7 @@
                 alert("You didn't fill out everything dispshit!");
             }
 
-            console.log(scores, name, photo);
+            $.post("/api/friends", {name, photo, scores});
         });
     </script>
 </body>

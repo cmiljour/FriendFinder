@@ -19,8 +19,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../data/friends"));
   });
 
-  // If no matching route is found default to home
   app.post("/api/friends", function(req, res) {
-    console.log(res);
+    console.log(req.body);
   });
 };
