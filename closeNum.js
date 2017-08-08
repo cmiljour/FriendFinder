@@ -1,5 +1,5 @@
-
-var answerArray = [{
+var answerArray = [
+{
 "name": "John Rambo",
 "photo": "http://www.photo.com",
 "scores": [
@@ -48,6 +48,15 @@ var answerArray = [{
 "2",
 "1"
 ]
-}];
+},
+]
 
-module.exports = answerArray;
+var newArray = [];
+
+answerArray.forEach(function(element){
+    newArray.push(element.scores);
+})
+
+
+
+console.log(newArray);

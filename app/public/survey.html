@@ -171,12 +171,14 @@
                 count++;
                 return;
                 } else {
-                    scores.push($(this).val());
+                    scores.push(parseInt($(this).val()));
                 }
             });
             if (count > 0 || name === '' || photo === ''){
                 alert("You didn't fill out everything dispshit!");
             }
+
+            // var addedScores = scores.reduce((a,b) => a + b, 0);
 
             var results = {
                 name: name,
