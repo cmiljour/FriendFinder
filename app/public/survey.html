@@ -148,7 +148,7 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    <a href="http://localhost:7000/api/friends">API Friends List</a> |
+                    <a href="https://hidden-chamber-49564.herokuapp.com/api/friends">API Friends List</a> |
                     <a href="https://github.com/cmiljour/FriendFinder">GitHub Repo</a>
                 </p>
             </div>
@@ -192,20 +192,23 @@
             name = $("#name").val();
             photo = $("#photo").val();
 
+            //go through each question/answer 
             $(".chosen-select").each(function () {
+                //check user input to make sure all boxes are filled
+                //if not, add to count
               if ($(this).val() === ''){
                 count++;
                 return;
+                //if none are empty, convert to int and add to scores array
                 } else {
                     scores.push(parseInt($(this).val()));
                 }
             });
+            // make sure everything is filled out, if not popup alert
             if (count > 0 || name === '' || photo === ''){
                 alert("You didn't fill out everything dispshit!");
             }
-
-            // var addedScores = scores.reduce((a,b) => a + b, 0);
-
+            // create new object holding survey data
             var results = {
                 name: name,
                 photo: photo,
@@ -216,11 +219,11 @@
 
             $.post(currentURL + "/api/friends", results, function (data){
 
-                // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+                // update the modal html with the returned data (best match)
 	    		$("#matchName").text(data.name);
 	    		$('#matchImg').attr("src", data.photo);
                 
-		    	// Show the modal with the best match 
+		    	// toggle the modal with the new data
 		    	$("#resultsModal").modal('toggle');
             });
         });
