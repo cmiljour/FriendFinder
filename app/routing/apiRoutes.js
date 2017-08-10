@@ -18,50 +18,34 @@ module.exports = function(app) {
   });
 
   app.post("/api/friends", function(req, res) {
-    // pull out the score from the post request
-    var number = req.body.scores;
+    //variable to hold the user's survey data
+    var surveyNumbers = req.body.scores;
+    //array to only hold scores of all posted surveys
     var onlyScoreArray = [];
+    //array to hold the difference in scores 
     var diffArray = [];
-    // console.log(number);
-
-    // pull out the scores from our current stored friends array to a new array
-    // of scores only.
+    //go through each survey result object
     friends.forEach(function(element){
-      for (let i=0; i<number.length; i++) {
-        diffArray[i] = Math.abs(number[i]-element.scores[i]);
+      for (let i=0; i<surveyNumbers.length; i++) {
+        //populate array with only difference between just posted survey data
+        //and previously posted survey data
+        diffArray[i] = Math.abs(surveyNumbers[i]-element.scores[i]);
       }
+      //sum up scores
       var addedScores = diffArray.reduce((a,b) => a + b, 0);
+      //add the scores to a scores only array 
       onlyScoreArray.push(addedScores);
     });
-    
+    // find the best match by picking the smallest score and identifying its index
     var bestMatch = indexOfSmallest(onlyScoreArray);
-    console.log(onlyScoreArray);
-    console.log(friends[bestMatch]);
-    
-    // run the 'closest' function to find the closest match from the just posted score
-    // against our newArray of scores and store the number found in closeNum
-    // var closeNum = closest(number,newArray);
-
-    // find the index value of the closest number
-    // var numIndexMatch = newArray.indexOf(closeNum);
+    //send the best match object back
+    res.send(friends[bestMatch]);
+    //add the submitted survey results to the array 
     friends.push(req.body);
-    // console.log(friends[numIndexMatch]);
+    
     
   });
     
-    // a function to find the closest number to a specified number in an array
-    // function closest (num, arr) {
-    //     var curr = arr[0];
-    //     var diff = Math.abs (num - curr);
-    //     for (var val = 0; val < arr.length; val++) {
-    //         var newdiff = Math.abs (num - arr[val]);
-    //         if (newdiff < diff) {
-    //             diff = newdiff;
-    //             curr = arr[val];
-    //         }
-    //     }
-    //     return curr;
-    // }
     function indexOfSmallest(array) {
       return array.indexOf(Math.min.apply(Math, array));
     }
